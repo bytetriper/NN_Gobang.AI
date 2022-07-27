@@ -20,7 +20,7 @@ from network.NNetArchitecture import NNetArchitecture as nnetarch
     TODO: Tune or add new arguments if you need
 """
 args = dotdict({
-    'lr': .03,
+    'lr': .003,
     'cuda': torch.cuda.is_available(),
     'feat_cnt': 3
 })
@@ -39,7 +39,8 @@ class NNetWrapper():
             self.scheduler = ...
         """
         self.optimizer=optim.Adam(self.nnet.parameters(),lr=args['lr'])
-        self.scheduler=optim.lr_scheduler.StepLR(self.optimizer,step_size=2,gamma=0.95)
+        #self.scheduler=optim.lr_scheduler.MultiStepLR(self.optimizer,milestones=[30,40],gamma=0.1)
+        self.scheduler=optim.lr_scheduler.ExponentialLR(self.optimizer,0.7)
         if args.cuda:# No cuda man
             self.nnet.cuda()
 

@@ -21,13 +21,13 @@ class NNetArchitecture(nn.Module):
 
         self.cv1=nn.Sequential(
             nn.ZeroPad2d(padding=(2,2,2,2)),
-            nn.Conv2d(self.feat_cnt,8,5),
-            nn.BatchNorm2d(8),
+            nn.Conv2d(self.feat_cnt,16,5),
+            nn.BatchNorm2d(16),
             nn.ReLU()
         )
         self.cv2=nn.Sequential(
             nn.ZeroPad2d(padding=(2,2,2,2)),
-            nn.Conv2d(8,16,5),
+            nn.Conv2d(16,16,5),
             nn.BatchNorm2d(16),
             nn.ReLU()
         )
