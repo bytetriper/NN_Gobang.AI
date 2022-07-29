@@ -27,17 +27,35 @@ class NNetArchitecture(nn.Module):
         )
         self.cv2=nn.Sequential(
             nn.ZeroPad2d(padding=(2,2,2,2)),
-            nn.Conv2d(16,16,5),
-            nn.BatchNorm2d(16),
+            nn.Conv2d(16,32,5),
+            nn.BatchNorm2d(32),
             nn.ReLU()
         )
         self.cv3=nn.Sequential(
             nn.ZeroPad2d(padding=(2,2,2,2)),
-            nn.Conv2d(16,8,5),
-            nn.BatchNorm2d(8),
+            nn.Conv2d(32,64,5),
+            nn.BatchNorm2d(64),
             nn.ReLU()
         )
-        self.fc1=nn.Linear(8*9*9,self.action_size)
+        self.cv4=nn.Sequential(
+            nn.ZeroPad2d(padding=(2,2,2,2)),
+            nn.Conv2d(64,128,5),
+            nn.BatchNorm2d(128),
+            nn.ReLU()
+        )
+        self.cv5=nn.Sequential(
+            nn.ZeroPad2d(padding=(2,2,2,2)),
+            nn.Conv2d(128,256,5),
+            nn.BatchNorm2d(256),
+            nn.ReLU()
+        )
+        self.cv6=nn.Sequential(
+            nn.ZeroPad2d(padding=(2,2,2,2)),
+            nn.Conv2d(256,512,5),
+            nn.BatchNorm2d(512),
+            nn.ReLU()
+        )
+        self.fc1=nn.Linear(512*9*9,self.action_size)
         #self.bn2=nn.BatchNorm1d(self.action_size)
         for m in self.modules():
             if isinstance(m,nn.Linear):
@@ -58,7 +76,9 @@ class NNetArchitecture(nn.Module):
         #print(pi.shape)
         #print(pi)
         pi=self.cv3(pi)
-        #pi=self.cv4(pi)
+        pi=self.cv4(pi)
+        pi=self.cv5(pi)
+        pi=self.cv6(pi)
         pi=self.fc1(pi.view(pi.shape[0],-1))
         #print(pi)
         """

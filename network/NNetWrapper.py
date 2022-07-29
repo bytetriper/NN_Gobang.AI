@@ -39,8 +39,8 @@ class NNetWrapper():
             self.scheduler = ...
         """
         self.optimizer=optim.Adam(self.nnet.parameters(),lr=args['lr'])
-        #self.scheduler=optim.lr_scheduler.MultiStepLR(self.optimizer,milestones=[30,40],gamma=0.1)
-        self.scheduler=optim.lr_scheduler.ExponentialLR(self.optimizer,0.7)
+        self.scheduler=optim.lr_scheduler.MultiStepLR(self.optimizer,milestones=[30,40],gamma=0.7)
+        #self.scheduler=optim.lr_scheduler.ExponentialLR(self.optimizer,0.7)
         if args.cuda:# No cuda man
             self.nnet.cuda()
 
